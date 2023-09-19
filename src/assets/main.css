@@ -1,6 +1,6 @@
+@import url('./reset.css');
 @import url('./base.css');
 @import url('./variable.css');
-@import url('./reset.css');
 
 a,
 .green {
@@ -15,7 +15,7 @@ a,
   }
 }
 
-@media (width >=1024px) {
+@media (width >= 1024px) {
   body {
     display: flex;
     flex-direction: column;
