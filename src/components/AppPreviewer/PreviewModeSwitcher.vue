@@ -6,8 +6,8 @@ let props = defineProps<{
   previewMode?: PreviewType
 }>()
 const icons: { type: PreviewType; icon: Icon }[] = [
-  { type: 'laptop', icon: LaptopComputer },
-  { type: 'mobile', icon: Iphone }
+  { type: 'mobile', icon: Iphone },
+  { type: 'laptop', icon: LaptopComputer }
 ]
 
 let emit = defineEmits<{
@@ -24,7 +24,7 @@ function greet(mode: PreviewType) {
       <component
         :is="icon.icon"
         :size="20"
-        :fill="props.previewMode === icon.type ? 'var(--color-text)' : 'var(--color-gray-500)'"
+        :fill="props.previewMode === icon.type ? 'var(--color-black)' : 'var(--color-gray-500)'"
         @click="greet(icon.type)"
       />
     </div>

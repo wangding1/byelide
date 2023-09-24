@@ -1,5 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import FlowEditor from '@/components/FlowEditor/FlowEditor.vue'
+</script>
 
 <template>
-  <div>1</div>
+  <FlowEditor />
 </template>

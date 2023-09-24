@@ -3,3 +3,6 @@ vuejs
 optimizelegibility
 dataSouce
 Byelide
+tiptap
+behaviour
+appeditor

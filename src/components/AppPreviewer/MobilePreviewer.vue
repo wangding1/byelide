@@ -2,6 +2,7 @@
 import PreviewModeSwitcher from './PreviewModeSwitcher.vue'
 import Statusbar from './StatusBar.vue'
 import type { PreviewType } from './type'
+import BlockRenderer from '@/blocks/BlockRenderer.vue'
 const props = defineProps<{
   previewMode?: PreviewType
 }>()
@@ -25,7 +26,9 @@ function greet(mode: PreviewType) {
           <div class="simulator-navigator">Byelide</div>
         </div>
       </div>
-      <div class="simulator"></div>
+      <div class="simulator">
+        <BlockRenderer></BlockRenderer>
+      </div>
     </div>
   </div>
 </template>
