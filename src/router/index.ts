@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { h } from 'vue'
+import { h, defineAsyncComponent } from 'vue'
 import AppView from '../views/AppView.vue'
 
 const router = createRouter({
@@ -21,11 +21,13 @@ const router = createRouter({
         {
           path: 'dataSource',
           name: 'dataSource',
-          component: () => import('../views/DataSourceView.vue'),
+          component: defineAsyncComponent(() => import('../views/DataSourceView.vue')),
           children: [
             {
               path: ':id',
-              component: () => import('../views/DataSourceContent/DataSourceContent.vue')
+              component: defineAsyncComponent(
+                () => import('../views/DataSourceContent/DataSourceContent.vue')
+              )
             },
             {
               path: '',
@@ -36,12 +38,12 @@ const router = createRouter({
         {
           path: 'layout',
           name: 'layout',
-          component: () => import('../views/PageLayoutView.vue')
+          component: defineAsyncComponent(() => import('../views/PageLayoutView.vue'))
         },
         {
           path: 'actions',
           name: 'actions',
-          component: () => import('../views/ActionsView.vue')
+          component: defineAsyncComponent(() => import('../views/ActionsView.vue'))
         }
       ]
     },
