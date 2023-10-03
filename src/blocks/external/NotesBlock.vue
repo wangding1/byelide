@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import NotesEditor from '@/components/NotesEditor/NotesEditor.vue'
+import type { NotesBlockInfo } from '@/types/block'
+const props = defineProps<{
+  blockInfo: NotesBlockInfo
+}>()
 </script>
 
 <template>
   <div class="notes">
-    <NotesEditor />
+    <NotesEditor :blockInfo="blockInfo" />
   </div>
 </template>
 

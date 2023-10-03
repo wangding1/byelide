@@ -3,8 +3,17 @@ import { TextBold, TextItalic, Strikethrough } from '@icon-park/vue-next'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import { ColorHighlighter } from './extensions/ColorHighlighter'
-
+import { inject } from 'vue'
+const editable = inject('editable', true)
+import type { NotesBlockInfo } from '@/types/block'
+const props = defineProps<{
+  blockInfo: NotesBlockInfo
+}>()
+import { useAppEditorStore } from '@/stores/appEditor'
+const appEditorStore = useAppEditorStore()
+// eslint-disable-next-line vue/no-setup-props-destructure
 const editor = useEditor({
+  editable,
   extensions: [
     StarterKit.configure({
       bold: {
@@ -15,17 +24,20 @@ const editor = useEditor({
     }),
     ColorHighlighter
   ],
-  content: `
-    <p>I’m <em>running</em> Tiptap <s>with</s> Vue.js. 🎉</p>
-    <p><strong>You</strong> can also teach the editor new things. For example to recognize hex colors and add a color</p>
-    <p> swatch on the fly: #FFF, #0D0D0D, #616161, #A975FF, #FB5151, #FD9170, #FFCB6B, #68CEF8, #80cbc4, #9DEF8F </p>
-  `
+  content: props.blockInfo.props.content,
+  onUpdate: ({ editor }) => {
+    let block = {
+      ...props.blockInfo,
+      props: { content: editor.getHTML() }
+    }
+    appEditorStore.updateBlock(block.id, block)
+  }
 })
 </script>
 
 <template>
-  <div class="notes-editor-wrapper">
-    <div class="notes-editor-header">
+  <div :class="['notes-editor-wrapper', editable && 'editable']">
+    <div class="notes-editor-header" v-if="editable">
       <button
         class="notes-editor-header-button"
         @click="editor?.chain().focus().toggleBold().run()"
@@ -57,8 +69,6 @@ const editor = useEditor({
   flex-direction: column;
   z-index: 4;
   height: 100%;
-  border: 1px solid var(--color-gray-300);
-  border-radius: 6px;
 }
 
 .notes-editor-header {
@@ -66,6 +76,11 @@ const editor = useEditor({
   padding: 8px 12px;
   font-size: var(--font-size-large);
   background-color: var(--color-gray-200);
+}
+
+.notes-editor-wrapper.editable {
+  border: 1px solid var(--color-gray-300);
+  border-radius: 6px;
 }
 
 .notes-editor-header-button {

@@ -88,7 +88,7 @@ let Icon = defineComponent({
         <Bug />
         开发模式:({{ envStore.debug ? '开' : '关' }})
       </div>
-      <div class="common-btn">
+      <div class="common-btn" @click="$router.push({ name: 'runner' })">
         <Share />
         发布
       </div>

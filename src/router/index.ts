@@ -44,6 +44,11 @@ const router = createRouter({
           component: () => import('../views/ActionsView.vue')
         }
       ]
+    },
+    {
+      path: '/runner',
+      name: 'runner',
+      component: () => import('../views/RunnerView.vue')
     }
   ]
 })

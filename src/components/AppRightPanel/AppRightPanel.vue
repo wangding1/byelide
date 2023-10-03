@@ -4,7 +4,9 @@ import { useAppEditorStore } from '@/stores/appEditor'
 import { computed } from 'vue'
 import QuoteSetting from './QuoteSetting.vue'
 import ChartSetting from './ChartSetting.vue'
+import SchemaExporter from './SchemaExporter.vue'
 import type { BlockInfo } from '@/types/block'
+import 'vue-json-pretty/lib/styles.css'
 
 const appEditorStore = useAppEditorStore()
 
@@ -48,6 +50,7 @@ const blockSetting = computed(() => {
           :blockInfo="currentBlockInfo"
           @change="(block: BlockInfo) => appEditorStore.updateBlock(block.id, block)"
         />
+        <SchemaExporter :currentBlockInfo="currentBlockInfo" />
       </div>
     </template>
   </div>

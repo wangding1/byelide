@@ -14,7 +14,6 @@ const { values, defineInputBinds } = useForm({
     content: blockInfo.value.props.content
   }
 })
-const { fields, push } = useFieldArray('blocks')
 
 const content = defineInputBinds('content')
 
@@ -24,30 +23,28 @@ watch([values], ([newValues]) => {
 </script>
 
 <template>
-  <div>
-    {{ blockInfo.type }}
+  <div class="quote-setting">
+    <div>
+      {{ blockInfo.type }}
+    </div>
+    <input class="content-input" v-bind="content" />
   </div>
-  <input class="content-input" v-bind="content" />
-
-  <input v-for="field in fields" :key="field.key" class="content-input" v-model="field.value" />
-
-  <button @click="push(new Date().toLocaleTimeString())">添加</button>
-
-  <!-- 非受控 -->
-  <!-- <input class="content-input" :defaultValue="value" @input="value = $event.target.value" /> -->
-  <!-- 受控 -->
-  <!-- <input class="content-input" :value="value" @input="value = $event.target.value" /> -->
-  <!-- {{ value }} -->
-  <!-- <button @click="value = '哈哈'">更改为 哈哈</button> -->
-
-  <!--  -->
 </template>
 
 <style scoped>
+.quote-setting {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+  font-size: var(--font-size-large);
+  border-radius: 8px;
+
+  /* background-color: ; */
+}
+
 .content-input {
   width: 100%;
-
-  /* 在做组件库的时候，input 是有一个 size 属性，sm、md、lg */
   height: 32px;
   margin-top: 8px;
   padding: 0 8px;

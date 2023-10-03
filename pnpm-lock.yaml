@@ -32,6 +32,9 @@ dependencies:
   '@vueuse/core':
     specifier: 10.2.1
     version: 10.2.1(vue@3.3.4)
+  copy-text-to-clipboard:
+    specifier: 3.2.0
+    version: 3.2.0
   d3:
     specifier: 7.8.5
     version: 7.8.5
@@ -62,6 +65,9 @@ dependencies:
   vue-echarts:
     specifier: 6.6.0
     version: 6.6.0(echarts@5.4.3)(vue@3.3.4)
+  vue-json-pretty:
+    specifier: 2.2.4
+    version: 2.2.4(vue@3.3.4)
   vue-router:
     specifier: 4.2.4
     version: 4.2.4(vue@3.3.4)
@@ -2958,6 +2964,11 @@ packages:
   /convert-source-map@1.9.0:
     resolution: {integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==}
     dev: true
+
+  /copy-text-to-clipboard@3.2.0:
+    resolution: {integrity: sha512-RnJFp1XR/LOBDckxTib5Qjr/PMfkatD0MUCQgdpqS8MdKiNUzBjAQBEN6oUy+jW7LI93BBG3DtMB2KOOKpGs2Q==}
+    engines: {node: '>=12'}
+    dev: false
 
   /core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
@@ -7435,6 +7446,15 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /vue-json-pretty@2.2.4(vue@3.3.4):
+    resolution: {integrity: sha512-JX80b3QDrspcH43C53CdtYeq/froApQGSV5y43bEMWFj2LGOxB96aH1VmvrFA21nD1WTP6nwfFMQqGXuS4jyFQ==}
+    engines: {node: '>= 10.0.0', npm: '>= 5.0.0'}
+    peerDependencies:
+      vue: '>=3.0.0'
+    dependencies:
+      vue: 3.3.4
+    dev: false
 
   /vue-router@4.2.4(vue@3.3.4):
     resolution: {integrity: sha512-9PISkmaCO02OzPVOMq2w82ilty6+xJmQrarYZDkjZBfl4RvYAlt4PKnEX21oW4KTtWfa9OuO/b3qk1Od3AEdCQ==}

@@ -14,12 +14,12 @@ export const useAppEditorStore = defineStore('appeditor', () => {
     blocks.value = newBlocks
   }
   function updateBlock(id: string, newBlock: BlockInfo) {
-    blocks.value = blocks.value.map((block) => {
-      if (block.id === id) {
-        return newBlock
+    for (let i = 0; i < blocks.value.length; i++) {
+      if (blocks.value[i].id == id) {
+        Object.assign(blocks.value[i], newBlock)
+        break
       }
-      return block
-    })
+    }
   }
   return {
     currentBlockId,

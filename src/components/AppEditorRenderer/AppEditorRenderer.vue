@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+
 import LaptopPreviewer from './LaptopPreviewer.vue'
 import MobilePreviewer from './MobilePreviewer.vue'
 import type { PreviewType } from './type'
-let previewMode = ref<PreviewType>('laptop')
+
+const previewMode = ref<PreviewType>('laptop')
+
 const handleModeChange = (mode: PreviewType) => {
   previewMode.value = mode
 }
@@ -11,18 +14,13 @@ const handleModeChange = (mode: PreviewType) => {
 
 <template>
   <div class="layout-content">
-    <LaptopPreviewer
-      :previewMode="previewMode"
-      v-if="previewMode == 'laptop'"
-      key="laptop"
-      @preview-mode-change="handleModeChange"
-    />
-    <MobilePreviewer
-      :previewMode="previewMode"
-      v-if="previewMode == 'mobile'"
-      key="mobile"
-      @preview-mode-change="handleModeChange"
-    />
+    <KeepAlive>
+      <component
+        :is="previewMode === 'laptop' ? LaptopPreviewer : MobilePreviewer"
+        :preview-mode="previewMode"
+        @preview-mode-change="handleModeChange"
+      />
+    </KeepAlive>
   </div>
 </template>
 
