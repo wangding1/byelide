@@ -1,47 +1,57 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import { Drag, Delete } from '@icon-park/vue-next'
-import { useAppEditorStore } from '@/stores/appEditor'
-import { useEnvStore } from '@/stores/debug'
-import { smoothDnD, dropHandlers } from 'smooth-dnd'
-import { storeToRefs } from 'pinia'
-import type { BlockInfo } from '@/types/block'
-const props = defineProps<{
-  block: BlockInfo
-  i: number
-}>()
-console.log(props)
-smoothDnD.dropHandler = dropHandlers.reactDropHandler().handler
+<template>
+  <smooth-dnd-container
+    drag-handle-selector=".handle"
+    group-name="blocks"
+    orientation="vertical"
+    tag="div"
+    @drop="updateBlocks(applyDrag(toRaw(blocks), $event))"
+  >
+    <smooth-dnd-draggable v-for="(block, i) in blocks" :key="block.id">
+      <BlockRenderer :block="block" :i="i"></BlockRenderer>
+    </smooth-dnd-draggable>
+  </smooth-dnd-container>
+</template>
 
-const blockWrapperRef = ref<HTMLElement | null>(null)
-const envStore = useEnvStore()
+<script setup lang="ts">
+import { toRaw } from 'vue'
+import { useAppEditorStore } from '@/stores/appEditor'
+import { smoothDnD, type DropResult, dropHandlers } from 'smooth-dnd'
+import { arrayMove } from '@/utils/array'
+import { SmoothDndContainer } from '@/components/SmoothDnd/SmoothDndContainer'
+import { SmoothDndDraggable } from '@/components/SmoothDnd/SmoothDndDraggable'
+import BlockRenderer from './BlockRenderer.vue'
+import { storeToRefs } from 'pinia'
+
+smoothDnD.dropHandler = dropHandlers.reactDropHandler().handler
 const appEditorStore = useAppEditorStore()
 
-const { currentBlockId, blocks } = storeToRefs(appEditorStore)
-const { selectBlock } = appEditorStore
-</script>
+const { blocks } = storeToRefs(appEditorStore)
+const { updateBlocks } = appEditorStore
 
-<template>
-  <div class="block-wrapper" ref="blockWrapperRef" @click.stop="selectBlock(block.id)">
-    <!-- @vue-ignore -->
-    <component :is="$blocksMap[block.type].material" class="block" :blockInfo="block" />
-    <div
-      :class="[
-        'block-wrapper-indicator',
-        { shown: envStore.debug, selected: currentBlockId === block.id }
-      ]"
-    >
-      <div class="block-toolbar" v-if="currentBlockId === block.id">
-        <div class="block-toolbar-item handle">
-          <drag />
-        </div>
-        <div class="block-toolbar-item" @click="blocks.splice(i, 1)">
-          <delete />
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
+const applyDrag = <T extends any[]>(arr: T, dragResult: DropResult) => {
+  const { removedIndex, addedIndex, payload } = dragResult
+  const result = [...arr]
+  if (addedIndex === null) return result
+
+  if (addedIndex !== null && removedIndex === null) {
+    result.splice(addedIndex, 0, {
+      id: `${Math.random()}`,
+      ...payload,
+      label: payload.name,
+      props:
+        payload.type == 'chart'
+          ? {
+              chartType: 'echarts'
+            }
+          : undefined
+    })
+  }
+  if (addedIndex !== null && removedIndex !== null) {
+    return arrayMove(result, removedIndex, addedIndex)
+  }
+  return result
+}
+</script>
 
 <style scoped>
 .block-wrapper {

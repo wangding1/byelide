@@ -6,3 +6,10 @@ Byelide
 tiptap
 behaviour
 appeditor
+echarts
+vueuse
+Echarts
+zrender
+autoresize
+veaury
+eslink

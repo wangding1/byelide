@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { blocksBaseMeta } from '@/constants/blocksBaseMeta'
 import { useAppEditorStore } from '@/stores/appEditor'
-
+import { storeToRefs } from 'pinia'
 const appEditorStore = useAppEditorStore()
+const { blocks } = storeToRefs(appEditorStore)
 </script>
 
 <template>
   <div class="outline-drawer-wrapper">
     <h3 class="drawer-title">大纲</h3>
     <ul class="outline-list">
-      <li class="outline-item" v-for="item in appEditorStore.blocks" :key="item.type">
+      <li class="outline-item" v-for="item in blocks" :key="item.type">
         <component :is="blocksBaseMeta[item.type].icon" />
         <span class="outline-item-name">
           {{ blocksBaseMeta[item.type].name }}

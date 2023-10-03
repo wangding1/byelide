@@ -63,7 +63,7 @@ let Icon = defineComponent({
         class="app-navigator-link-item"
         v-for="item in linkItems"
         :key="item.value"
-        :to="item.value"
+        :to="`/app/${item.value}`"
         :style="activeLink === item.value && { background: item.bg }"
       >
         <div

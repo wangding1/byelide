@@ -2,7 +2,9 @@
 import { blocksBaseMeta } from '@/constants/blocksBaseMeta'
 import { useAppEditorStore } from '@/stores/appEditor'
 import { computed } from 'vue'
-import { reactive } from 'vue'
+import QuoteSetting from './QuoteSetting.vue'
+import ChartSetting from './ChartSetting.vue'
+import type { BlockInfo } from '@/types/block'
 
 const appEditorStore = useAppEditorStore()
 
@@ -20,6 +22,18 @@ const currentBlockInfo = computed(() => {
   if (!appEditorStore.currentBlockId) return null
   return blocksMap.value[appEditorStore.currentBlockId]
 })
+const blockSetting = computed(() => {
+  switch (currentBlockInfo.value?.type) {
+    case 'quote': {
+      return QuoteSetting
+    }
+    case 'chart': {
+      return ChartSetting
+    }
+    default:
+      return ''
+  }
+})
 </script>
 
 <template>
@@ -28,7 +42,13 @@ const currentBlockInfo = computed(() => {
       <div class="app-right-panel-header">
         {{ blocksBaseMeta[currentBlockInfo.type].name }}
       </div>
-      <div class="app-right-panel-content">{{ currentBlockInfo.type }}</div>
+      <div class="app-right-panel-content">
+        <component
+          :is="blockSetting"
+          :blockInfo="currentBlockInfo"
+          @change="(block: BlockInfo) => appEditorStore.updateBlock(block.id, block)"
+        />
+      </div>
     </template>
   </div>
 </template>
